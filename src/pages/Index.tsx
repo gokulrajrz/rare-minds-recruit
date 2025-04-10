@@ -39,13 +39,19 @@ const Index = () => {
     <div className="min-h-screen">
       <Navbar />
       <HeroSection />
-      <WhyRareminds />
-      <ServicesSection />
+      <div id="why-rareminds">
+        <WhyRareminds />
+      </div>
+      <div id="services">
+        <ServicesSection />
+      </div>
       <IndustriesSection />
       <TestimonialsSection />
       <CaseStudiesSection />
       <ProcessSection />
-      <ContactSection />
+      <div id="contact">
+        <ContactSection />
+      </div>
       
       <footer className="bg-rareminds-dark text-white py-6">
         <div className="container text-center">
