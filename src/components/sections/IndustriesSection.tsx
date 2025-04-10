@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Globe } from "lucide-react";
+import { motion } from "framer-motion";
 
 const industryIcons = [
   { icon: "💻", name: "Information Technology" },
@@ -25,42 +26,87 @@ const IndustriesSection = () => {
     }
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { scale: 0.95, opacity: 0 },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100
+      }
+    }
+  };
+
   return (
-    <section id="industries" className="section bg-gray-50">
-      <div className="container">
+    <section id="industries" className="section py-24 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-red-900 to-red-700 z-0"></div>
+      <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgdmlld0JveD0iMCAwIDYwIDYwIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC40Ij48cGF0aCBkPSJNMzYgMzRjMC0yLjIgMS44LTQgNC00czQgMS44IDQgNC0xLjggNC00IDQtNC0xLjgtNC00TTE2IDI0YzAtMi4yIDEuOC00IDQtNHM0IDEuOCA0IDQtMS44IDQtNCA0LTQtMS44LTQtNCIvPjwvZz48L2c+PC9zdmc+')]"></div>
+      
+      <div className="container relative z-10">
         <div className="flex flex-col md:flex-row items-center md:items-start gap-12">
-          <div className="w-full md:w-1/2">
-            <Globe size={56} className="text-rareminds-purple mb-6" />
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Industries We Serve</h2>
-            <div className="text-gray-700 space-y-4 mb-8">
-              <p>
-                Rareminds is a global recruitment and cross-border talent acquisition firm based in India, specializing in hiring third-country nationals for international roles.
-              </p>
-              <p>
-                We have deep expertise across multiple industry verticals, allowing us to understand the specific talent requirements and business language of diverse sectors.
-              </p>
+          <motion.div 
+            className="w-full md:w-1/2 text-white"
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="bg-white/10 backdrop-blur-sm rounded-full p-4 inline-block mb-6">
+              <Globe size={36} className="text-white" />
+            </div>
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">Industries We Serve</h2>
+            <div className="space-y-6 mb-8">
+              <div className="bg-red-800/50 backdrop-blur-sm rounded-xl p-6 border border-white/10">
+                <p className="text-white/90 text-lg leading-relaxed">
+                  Rareminds is a global recruitment and cross-border talent acquisition firm based in India, specializing in hiring third-country nationals for international roles.
+                </p>
+              </div>
+              <div className="bg-red-800/50 backdrop-blur-sm rounded-xl p-6 border border-white/10">
+                <p className="text-white/90 text-lg leading-relaxed">
+                  We have deep expertise across multiple industry verticals, allowing us to understand the specific talent requirements and business language of diverse sectors.
+                </p>
+              </div>
             </div>
             <Button 
               onClick={scrollToCaseStudies}
-              className="bg-rareminds-purple hover:bg-rareminds-accent text-white"
+              className="bg-white text-red-700 hover:bg-white/90 hover:text-red-800 shadow-lg shadow-red-950/20"
             >
               See Our Impact Stories
             </Button>
-          </div>
+          </motion.div>
 
-          <div className="w-full md:w-1/2">
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 animate-on-scroll">
+          <motion.div 
+            className="w-full md:w-1/2"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
               {industryIcons.map((industry, index) => (
-                <div 
+                <motion.div 
                   key={index}
-                  className="bg-white rounded-lg shadow p-4 flex flex-col items-center text-center hover:shadow-md transition-shadow"
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                  className="bg-white/10 backdrop-blur-sm rounded-xl p-6 flex flex-col items-center text-center border border-white/10 hover:bg-white/20 transition-colors"
                 >
-                  <span className="text-3xl mb-2">{industry.icon}</span>
-                  <span className="text-sm font-medium text-gray-700">{industry.name}</span>
-                </div>
+                  <span className="text-4xl mb-3">{industry.icon}</span>
+                  <span className="text-sm font-medium text-white">{industry.name}</span>
+                </motion.div>
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
