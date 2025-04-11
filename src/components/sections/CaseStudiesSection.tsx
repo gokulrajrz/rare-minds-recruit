@@ -3,6 +3,13 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, ArrowRight, ChevronLeft, ChevronRight, TrendingUp, Award, CheckCheck } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from "@/components/ui/carousel";
 
 const caseStudies = [
   {
@@ -44,18 +51,6 @@ const caseStudies = [
 ];
 
 const CaseStudiesSection = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const goToNext = () => {
-    setActiveIndex((prev) => (prev + 1) % caseStudies.length);
-  };
-
-  const goToPrev = () => {
-    setActiveIndex((prev) => (prev - 1 + caseStudies.length) % caseStudies.length);
-  };
-
-  const currentCase = caseStudies[activeIndex];
-
   return (
     <section id="case-studies" className="section py-24 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
       <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgdmlld0JveD0iMCAwIDYwIDYwIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMwMDAwMDAiIGZpbGwtb3BhY2l0eT0iMC4yIj48cGF0aCBkPSJNMzYgMzRjMC0yLjIgMS44LTQgNC00czQgMS44IDQgNC0xLjggNC00IDQtNC0xLjgtNC00TTE2IDI0YzAtMi4yIDEuOC00IDQtNHM0IDEuOCA0IDQtMS44IDQtNCA0LTQtMS44LTQtNCIvPjwvZz48L2c+PC9zdmc+')]"></div>
@@ -77,151 +72,134 @@ const CaseStudiesSection = () => {
           </p>
         </motion.div>
         
-        <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
-          <div className="grid grid-cols-1 md:grid-cols-3 min-h-[70vh]">
-            {/* Left Panel - Image & Stats */}
-            <div className="bg-gradient-to-br from-red-700 to-red-900 text-white p-8 flex flex-col justify-between">
-              <div>
-                <motion.div
-                  key={`case-title-${activeIndex}`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="mb-8"
-                >
-                  <h3 className="text-2xl font-bold mb-2 flex items-center">
-                    <span className="mr-2 bg-white w-8 h-8 rounded-full flex items-center justify-center text-red-800">
-                      {activeIndex + 1}
-                    </span>
-                    {currentCase.title}
-                  </h3>
-                  <p className="text-red-100">{currentCase.subtitle}</p>
-                </motion.div>
-                
-                <div className="space-y-4">
-                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
-                    <TrendingUp size={24} className="mb-2" />
-                    <h4 className="font-semibold mb-1">Key Outcomes</h4>
-                    <ul className="space-y-2">
-                      {currentCase.outcomes.map((outcome, i) => (
-                        <motion.li 
-                          key={`outcome-${activeIndex}-${i}`}
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ duration: 0.3, delay: i * 0.1 }}
-                          className="flex items-start gap-2"
+        <Carousel className="w-full">
+          <CarouselContent>
+            {caseStudies.map((currentCase, idx) => (
+              <CarouselItem key={`case-${idx}`}>
+                <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
+                  <div className="grid grid-cols-1 md:grid-cols-3 min-h-[70vh]">
+                    {/* Left Panel - Image & Stats */}
+                    <div className="bg-gradient-to-br from-red-700 to-red-900 text-white p-8 flex flex-col justify-between">
+                      <div>
+                        <motion.div
+                          key={`case-title-${idx}`}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.5 }}
+                          className="mb-8"
                         >
-                          <CheckCheck size={18} className="mt-1 flex-shrink-0" />
-                          <span className="text-sm">{outcome}</span>
-                        </motion.li>
-                      ))}
-                    </ul>
+                          <h3 className="text-2xl font-bold mb-2 flex items-center">
+                            <span className="mr-2 bg-white w-8 h-8 rounded-full flex items-center justify-center text-red-800">
+                              {idx + 1}
+                            </span>
+                            {currentCase.title}
+                          </h3>
+                          <p className="text-red-100">{currentCase.subtitle}</p>
+                        </motion.div>
+                        
+                        <div className="space-y-4">
+                          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                            <TrendingUp size={24} className="mb-2" />
+                            <h4 className="font-semibold mb-1">Key Outcomes</h4>
+                            <ul className="space-y-2">
+                              {currentCase.outcomes.map((outcome, i) => (
+                                <motion.li 
+                                  key={`outcome-${idx}-${i}`}
+                                  initial={{ opacity: 0, x: -10 }}
+                                  animate={{ opacity: 1, x: 0 }}
+                                  transition={{ duration: 0.3, delay: i * 0.1 }}
+                                  className="flex items-start gap-2"
+                                >
+                                  <CheckCheck size={18} className="mt-1 flex-shrink-0" />
+                                  <span className="text-sm">{outcome}</span>
+                                </motion.li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <blockquote className="border-l-4 border-red-400 pl-4 italic text-red-100">
+                          "{currentCase.testimonial}"
+                        </blockquote>
+                        <p className="text-right text-sm mt-2">— {currentCase.author}</p>
+                      </div>
+                    </div>
+                    
+                    {/* Right Panel - Case Study Details */}
+                    <div className="col-span-2 p-8">
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-full">
+                        <div className="space-y-6">
+                          <motion.div 
+                            key={`client-${idx}`}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4 }}
+                            className="bg-gray-50 p-6 rounded-xl"
+                          >
+                            <h4 className="text-red-700 font-bold mb-3 flex items-center gap-2">
+                              <span className="bg-red-100 p-2 rounded-lg">👥</span>
+                              Client
+                            </h4>
+                            <p className="text-gray-700">{currentCase.client}</p>
+                          </motion.div>
+                        
+                          <motion.div 
+                            key={`challenge-${idx}`}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: 0.1 }}
+                            className="bg-gray-50 p-6 rounded-xl"
+                          >
+                            <h4 className="text-red-700 font-bold mb-3 flex items-center gap-2">
+                              <span className="bg-red-100 p-2 rounded-lg">🎯</span>
+                              Challenge
+                            </h4>
+                            <p className="text-gray-700">{currentCase.challenge}</p>
+                          </motion.div>
+                        </div>
+                        
+                        <motion.div 
+                          key={`solution-${idx}`}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.4, delay: 0.2 }}
+                          className="bg-gray-50 p-6 rounded-xl flex flex-col justify-between h-full"
+                        >
+                          <div>
+                            <h4 className="text-red-700 font-bold mb-3 flex items-center gap-2">
+                              <span className="bg-red-100 p-2 rounded-lg">⚙️</span>
+                              Rareminds Solution
+                            </h4>
+                            <ul className="space-y-3">
+                              {currentCase.solution.map((step, i) => (
+                                <li key={`solution-${idx}-${i}`} className="flex items-start gap-3">
+                                  <CheckCircle className="text-green-500 mt-1 flex-shrink-0" size={18} />
+                                  <span className="text-gray-700">{step}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          
+                          <div className="mt-6">
+                            <Button className="bg-red-600 hover:bg-red-700">
+                              Read Full Case Study <ArrowRight size={16} className="ml-2" />
+                            </Button>
+                          </div>
+                        </motion.div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              
-              <div>
-                <blockquote className="border-l-4 border-red-400 pl-4 italic text-red-100">
-                  "{currentCase.testimonial}"
-                </blockquote>
-                <p className="text-right text-sm mt-2">— {currentCase.author}</p>
-              </div>
-            </div>
-            
-            {/* Right Panel - Case Study Details */}
-            <div className="col-span-2 p-8">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-full">
-                <div className="space-y-6">
-                  <motion.div 
-                    key={`client-${activeIndex}`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4 }}
-                    className="bg-gray-50 p-6 rounded-xl"
-                  >
-                    <h4 className="text-red-700 font-bold mb-3 flex items-center gap-2">
-                      <span className="bg-red-100 p-2 rounded-lg">👥</span>
-                      Client
-                    </h4>
-                    <p className="text-gray-700">{currentCase.client}</p>
-                  </motion.div>
-                
-                  <motion.div 
-                    key={`challenge-${activeIndex}`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: 0.1 }}
-                    className="bg-gray-50 p-6 rounded-xl"
-                  >
-                    <h4 className="text-red-700 font-bold mb-3 flex items-center gap-2">
-                      <span className="bg-red-100 p-2 rounded-lg">🎯</span>
-                      Challenge
-                    </h4>
-                    <p className="text-gray-700">{currentCase.challenge}</p>
-                  </motion.div>
-                </div>
-                
-                <motion.div 
-                  key={`solution-${activeIndex}`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.2 }}
-                  className="bg-gray-50 p-6 rounded-xl flex flex-col justify-between h-full"
-                >
-                  <div>
-                    <h4 className="text-red-700 font-bold mb-3 flex items-center gap-2">
-                      <span className="bg-red-100 p-2 rounded-lg">⚙️</span>
-                      Rareminds Solution
-                    </h4>
-                    <ul className="space-y-3">
-                      {currentCase.solution.map((step, i) => (
-                        <li key={`solution-${activeIndex}-${i}`} className="flex items-start gap-3">
-                          <CheckCircle className="text-green-500 mt-1 flex-shrink-0" size={18} />
-                          <span className="text-gray-700">{step}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  
-                  <div className="mt-6">
-                    <Button className="bg-red-600 hover:bg-red-700">
-                      Read Full Case Study <ArrowRight size={16} className="ml-2" />
-                    </Button>
-                  </div>
-                </motion.div>
-              </div>
-              
-              <div className="flex justify-between mt-8">
-                <div className="flex items-center">
-                  <button 
-                    onClick={goToPrev}
-                    className="w-10 h-10 rounded-full flex items-center justify-center border border-gray-300 hover:bg-gray-100 transition-colors mr-2"
-                  >
-                    <ChevronLeft size={18} />
-                  </button>
-                  
-                  <button 
-                    onClick={goToNext}
-                    className="w-10 h-10 rounded-full flex items-center justify-center border border-gray-300 hover:bg-gray-100 transition-colors"
-                  >
-                    <ChevronRight size={18} />
-                  </button>
-                </div>
-                
-                <div className="flex items-center gap-1">
-                  {caseStudies.map((_, idx) => (
-                    <button 
-                      key={idx} 
-                      onClick={() => setActiveIndex(idx)}
-                      className={`w-2 h-2 rounded-full ${idx === activeIndex ? 'bg-red-600 w-6' : 'bg-gray-300'} transition-all`}
-                      aria-label={`Go to case study ${idx + 1}`}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <div className="flex justify-center mt-8">
+            <CarouselPrevious className="static translate-y-0 mr-4 bg-red-100 border-red-200 text-red-600 hover:bg-red-600 hover:text-white" />
+            <CarouselNext className="static translate-y-0 ml-4 bg-red-100 border-red-200 text-red-600 hover:bg-red-600 hover:text-white" />
           </div>
-        </div>
+        </Carousel>
       </div>
     </section>
   );

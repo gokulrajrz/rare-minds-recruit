@@ -63,7 +63,7 @@ const ContactSection = () => {
   ];
 
   return (
-    <section id="contact" className="section py-24 relative overflow-hidden bg-gradient-to-br from-gray-900 to-red-900 text-white">
+    <section id="contact" className="section py-24 relative overflow-hidden bg-gradient-to-br from-blue-50 to-red-50 text-gray-800">
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzRjMC0yLjIgMS44LTQgNC00czQgMS44IDQgNC0xLjggNC00IDQtNC0xLjgtNC00TTE2IDI0YzAtMi4yIDEuOC00IDQtNHM0IDEuOCA0IDQtMS44IDQtNCA0LTQtMS44LTQtNCIvPjwvZz48L2c+PC9zdmc+')] opacity-20"></div>
       
       <motion.div 
@@ -74,11 +74,11 @@ const ContactSection = () => {
         className="container relative z-10"
       >
         <div className="text-center mb-16">
-          <div className="w-20 h-20 bg-red-600 rounded-2xl mx-auto mb-8 flex items-center justify-center rotate-12 shadow-lg shadow-red-900/50">
+          <div className="w-20 h-20 bg-red-600 rounded-2xl mx-auto mb-8 flex items-center justify-center rotate-12 shadow-lg shadow-red-200/50">
             <Send size={36} className="text-white" />
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">Let's Build Your Success Team</h2>
-          <p className="text-xl opacity-90 max-w-2xl mx-auto text-gray-200">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-800">Let's Build Your Success Team</h2>
+          <p className="text-xl opacity-90 max-w-2xl mx-auto text-gray-600">
             Whether you're hiring 5 or 500, we'll help you get it right.
           </p>
         </div>
@@ -91,10 +91,10 @@ const ContactSection = () => {
             viewport={{ once: true }}
             className="lg:col-span-3"
           >
-            <div className="bg-white/10 backdrop-blur-sm border border-white/10 rounded-3xl overflow-hidden shadow-xl">
+            <div className="bg-white/80 backdrop-blur-sm border border-white/30 rounded-3xl overflow-hidden shadow-xl">
               <div className="p-8">
-                <h3 className="text-2xl font-bold mb-6 flex items-center gap-3">
-                  <span className="bg-red-600 w-10 h-10 rounded-full flex items-center justify-center">
+                <h3 className="text-2xl font-bold mb-6 flex items-center gap-3 text-gray-800">
+                  <span className="bg-red-600 w-10 h-10 rounded-full flex items-center justify-center text-white">
                     <Mail size={20} />
                   </span>
                   Request Talent Now
@@ -103,26 +103,26 @@ const ContactSection = () => {
                 <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label htmlFor="name" className="block mb-2 font-medium text-gray-200">Your Name</label>
+                      <label htmlFor="name" className="block mb-2 font-medium text-gray-700">Your Name</label>
                       <Input 
                         id="name" 
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
                         placeholder="Full Name" 
-                        className="w-full bg-white/5 border-white/10 text-white placeholder:text-gray-400" 
+                        className="w-full bg-white/50 border-gray-200 text-gray-800 placeholder:text-gray-400" 
                         required 
                       />
                     </div>
                     <div>
-                      <label htmlFor="company" className="block mb-2 font-medium text-gray-200">Company</label>
+                      <label htmlFor="company" className="block mb-2 font-medium text-gray-700">Company</label>
                       <Input 
                         id="company" 
                         name="company"
                         value={formData.company}
                         onChange={handleChange}
                         placeholder="Company Name" 
-                        className="w-full bg-white/5 border-white/10 text-white placeholder:text-gray-400" 
+                        className="w-full bg-white/50 border-gray-200 text-gray-800 placeholder:text-gray-400" 
                         required 
                       />
                     </div>
@@ -130,7 +130,7 @@ const ContactSection = () => {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label htmlFor="email" className="block mb-2 font-medium text-gray-200">Email Address</label>
+                      <label htmlFor="email" className="block mb-2 font-medium text-gray-700">Email Address</label>
                       <Input 
                         id="email" 
                         name="email"
@@ -138,33 +138,33 @@ const ContactSection = () => {
                         value={formData.email}
                         onChange={handleChange} 
                         placeholder="name@company.com" 
-                        className="w-full bg-white/5 border-white/10 text-white placeholder:text-gray-400" 
+                        className="w-full bg-white/50 border-gray-200 text-gray-800 placeholder:text-gray-400" 
                         required 
                       />
                     </div>
                     <div>
-                      <label htmlFor="role" className="block mb-2 font-medium text-gray-200">Role to Hire</label>
+                      <label htmlFor="role" className="block mb-2 font-medium text-gray-700">Role to Hire</label>
                       <Input 
                         id="role" 
                         name="role"
                         value={formData.role}
                         onChange={handleChange}
                         placeholder="Job Title/Position" 
-                        className="w-full bg-white/5 border-white/10 text-white placeholder:text-gray-400" 
+                        className="w-full bg-white/50 border-gray-200 text-gray-800 placeholder:text-gray-400" 
                         required 
                       />
                     </div>
                   </div>
                   
                   <div>
-                    <label htmlFor="message" className="block mb-2 font-medium text-gray-200">Message</label>
+                    <label htmlFor="message" className="block mb-2 font-medium text-gray-700">Message</label>
                     <Textarea 
                       id="message" 
                       name="message"
                       value={formData.message}
                       onChange={handleChange}
                       placeholder="Tell us about your hiring needs or challenges" 
-                      className="w-full min-h-[120px] bg-white/5 border-white/10 text-white placeholder:text-gray-400" 
+                      className="w-full min-h-[120px] bg-white/50 border-gray-200 text-gray-800 placeholder:text-gray-400" 
                       required 
                     />
                   </div>
@@ -200,7 +200,7 @@ const ContactSection = () => {
                           <Button 
                             type="button" 
                             variant="outline"
-                            className="border-white/30 text-white hover:bg-white/10 rounded-xl"
+                            className="border-red-300 text-red-700 hover:bg-red-50 rounded-xl"
                             onClick={() => window.open('https://calendly.com')}
                           >
                             <Calendar size={18} className="mr-2" /> Schedule a Consultation
@@ -211,11 +211,11 @@ const ContactSection = () => {
                           key="success"
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
-                          className="bg-green-600/20 border border-green-600/30 rounded-xl p-4 text-center"
+                          className="bg-green-100 border border-green-300 rounded-xl p-4 text-center"
                         >
-                          <CheckCircle2 size={32} className="mx-auto mb-2 text-green-400" />
-                          <p className="font-medium">Message sent successfully!</p>
-                          <p className="text-sm text-gray-300 mt-1">Our team will contact you shortly.</p>
+                          <CheckCircle2 size={32} className="mx-auto mb-2 text-green-600" />
+                          <p className="font-medium text-green-800">Message sent successfully!</p>
+                          <p className="text-sm text-green-700 mt-1">Our team will contact you shortly.</p>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -233,58 +233,58 @@ const ContactSection = () => {
             className="lg:col-span-2"
           >
             <div className="h-full flex flex-col justify-between gap-6">
-              <div className="bg-white/10 backdrop-blur-sm border border-white/10 rounded-3xl p-8 shadow-xl">
-                <h3 className="text-2xl font-bold mb-6">Get in Touch</h3>
+              <div className="bg-white/80 backdrop-blur-sm border border-white/30 rounded-3xl p-8 shadow-xl">
+                <h3 className="text-2xl font-bold mb-6 text-gray-800">Get in Touch</h3>
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
-                    <div className="bg-red-600/30 p-3 rounded-xl">
+                    <div className="bg-red-100 p-3 rounded-xl text-red-600">
                       <Phone size={24} />
                     </div>
                     <div>
-                      <h4 className="font-semibold mb-1">Phone</h4>
-                      <p>+91 98765 43210</p>
-                      <p>+91 87654 32109</p>
+                      <h4 className="font-semibold mb-1 text-gray-800">Phone</h4>
+                      <p className="text-gray-600">+91 98765 43210</p>
+                      <p className="text-gray-600">+91 87654 32109</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <div className="bg-red-600/30 p-3 rounded-xl">
+                    <div className="bg-red-100 p-3 rounded-xl text-red-600">
                       <Mail size={24} />
                     </div>
                     <div>
-                      <h4 className="font-semibold mb-1">Email</h4>
-                      <p>info@rareminds.com</p>
-                      <p>careers@rareminds.com</p>
+                      <h4 className="font-semibold mb-1 text-gray-800">Email</h4>
+                      <p className="text-gray-600">info@rareminds.com</p>
+                      <p className="text-gray-600">careers@rareminds.com</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <div className="bg-red-600/30 p-3 rounded-xl">
+                    <div className="bg-red-100 p-3 rounded-xl text-red-600">
                       <MapPin size={24} />
                     </div>
                     <div>
-                      <h4 className="font-semibold mb-1">Address</h4>
-                      <p>123 Corporate Avenue, Tech Park</p>
-                      <p>Bengaluru, Karnataka 560001</p>
+                      <h4 className="font-semibold mb-1 text-gray-800">Address</h4>
+                      <p className="text-gray-600">123 Corporate Avenue, Tech Park</p>
+                      <p className="text-gray-600">Bengaluru, Karnataka 560001</p>
                     </div>
                   </div>
                 </div>
               </div>
               
-              <div className="bg-white/10 backdrop-blur-sm border border-white/10 rounded-3xl p-8 shadow-xl">
-                <h3 className="text-xl font-bold mb-4">Our Services</h3>
+              <div className="bg-white/80 backdrop-blur-sm border border-white/30 rounded-3xl p-8 shadow-xl">
+                <h3 className="text-xl font-bold mb-4 text-gray-800">Our Services</h3>
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   {services.map((service, index) => (
                     <div 
                       key={index}
-                      className="bg-white/5 hover:bg-white/10 transition-colors rounded-lg p-3 flex items-center gap-2"
+                      className="bg-white/50 hover:bg-red-50 transition-colors rounded-lg p-3 flex items-center gap-2"
                     >
                       <div className="w-2 h-2 rounded-full bg-red-500"></div>
-                      <span className="text-sm">{service}</span>
+                      <span className="text-sm text-gray-700">{service}</span>
                     </div>
                   ))}
                 </div>
                 <a 
                   href="#services" 
-                  className="flex items-center text-red-300 hover:text-red-200 transition-colors text-sm mt-2"
+                  className="flex items-center text-red-600 hover:text-red-800 transition-colors text-sm mt-2"
                 >
                   View all services <ExternalLink size={14} className="ml-1" />
                 </a>

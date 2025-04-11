@@ -52,24 +52,6 @@ const ServicesSection = () => {
     }
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1
-    }
-  };
-
   const services = [
     { icon: <Code />, title: "Technical Hiring", description: "Access pre-screened tech professionals for IT, software, engineering & data roles." },
     { icon: <Users />, title: "Bulk Hiring", description: "Need to grow your workforce fast? We handle high-volume hiring with speed and scale." },
@@ -114,7 +96,7 @@ const ServicesSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="relative px-4 md:px-10"
+          className="relative"
         >
           <Carousel
             ref={carouselRef}
@@ -127,7 +109,7 @@ const ServicesSection = () => {
             <CarouselContent className="-ml-2 md:-ml-4">
               {services.map((service, index) => (
                 <CarouselItem key={index} className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/3">
-                  <div className="h-full">
+                  <div className="h-full p-2">
                     <ServiceCard
                       icon={service.icon}
                       title={service.title}
