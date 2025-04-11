@@ -37,17 +37,54 @@ const WhyRareminds = () => {
 
   return (
     <section id="why-rareminds" className="section py-20 relative overflow-hidden">
+      {/* Background elements */}
       <div className="absolute inset-0 bg-gradient-to-br from-red-50 to-white z-0"></div>
-      <div className="absolute top-0 left-0 w-full h-40 bg-gradient-to-b from-white to-transparent z-10"></div>
-      
+      <div className="absolute -top-40 -left-40 w-80 h-80 bg-gradient-to-br from-red-100 to-transparent rounded-full blur-3xl opacity-70"></div>
+      <div className="absolute -bottom-40 -right-40 w-80 h-80 bg-gradient-to-br from-red-100 to-transparent rounded-full blur-3xl opacity-70"></div>
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB4PSIwIiB5PSIwIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxjaXJjbGUgY3g9IjEiIGN5PSIxIiByPSIxIiBmaWxsPSJyZ2JhKDI1NSwgMCwgMCwgMC4wMykiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjcGF0dGVybikiLz48L3N2Zz4=')] opacity-50 z-0"></div>
+
       <div className="container relative z-20">
+        {/* Heading section with 3D effect and gradient */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold mb-4 inline-block relative">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-red-800">
-              Trusted. Proven. Scalable.
-            </span>
-            <div className="h-1 w-24 bg-gradient-to-r from-red-600 to-red-400 rounded-full absolute bottom-0 left-1/2 transform -translate-x-1/2 mt-2"></div>
-          </h2>
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="transform perspective-1000"
+          >
+            <h2 className="relative inline-block text-4xl md:text-6xl font-bold mb-6 overflow-hidden">
+              <span className="inline-block">
+                <span className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-red-700 via-red-600 to-red-800 transform hover:scale-105 transition-transform duration-300">
+                  Trusted.
+                </span>
+              </span>
+              <span className="mx-2 md:mx-4 inline-block">
+                <span className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-red-600 via-red-500 to-red-700 transform hover:scale-105 transition-transform duration-300">
+                  Proven.
+                </span>
+              </span>
+              <span className="inline-block">
+                <span className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-red-800 via-red-600 to-red-700 transform hover:scale-105 transition-transform duration-300">
+                  Scalable.
+                </span>
+              </span>
+              
+              {/* Animated underline */}
+              <motion.div 
+                className="absolute bottom-0 left-0 h-1.5 bg-gradient-to-r from-red-700 via-red-500 to-red-600 rounded-full"
+                initial={{ width: "0%" }}
+                whileInView={{ width: "100%" }}
+                viewport={{ once: true }}
+                transition={{ duration: 1, delay: 0.5 }}
+              ></motion.div>
+            </h2>
+            
+            <p className="text-gray-600 max-w-2xl mx-auto text-lg mt-6">
+              Our track record speaks for itself - delivering exceptional talent solutions 
+              across India and beyond with speed, quality and precision.
+            </p>
+          </motion.div>
         </div>
 
         <motion.div 

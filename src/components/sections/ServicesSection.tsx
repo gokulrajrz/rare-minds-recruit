@@ -14,10 +14,37 @@ import {
   UsersRound,
   Map,
   MessageSquare,
-  BookOpen
+  BookOpen,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
+import { useRef, useState, useEffect } from "react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from "@/components/ui/carousel";
+import { useMediaQuery } from "react-responsive";
 
 const ServicesSection = () => {
+  const carouselRef = useRef(null);
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
+  const isTablet = useMediaQuery({ query: '(max-width: 1024px)' });
+  const [itemsPerView, setItemsPerView] = useState(3);
+
+  // Update items per view based on screen size
+  useEffect(() => {
+    if (isMobile) {
+      setItemsPerView(1);
+    } else if (isTablet) {
+      setItemsPerView(2);
+    } else {
+      setItemsPerView(3);
+    }
+  }, [isMobile, isTablet]);
+
   const scrollToContact = () => {
     const element = document.getElementById('contact');
     if (element) {
@@ -60,6 +87,7 @@ const ServicesSection = () => {
 
   return (
     <section id="services" className="section py-20 relative">
+      {/* Background elements */}
       <div className="absolute inset-0 bg-white z-0"></div>
       <div className="absolute left-0 top-0 w-64 h-64 bg-gradient-to-br from-red-100 to-transparent rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
       <div className="absolute right-0 bottom-0 w-96 h-96 bg-gradient-to-tl from-red-100 to-transparent rounded-full translate-x-1/2 translate-y-1/2 blur-3xl"></div>
@@ -82,22 +110,40 @@ const ServicesSection = () => {
         </div>
 
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="relative px-4 md:px-10"
         >
-          {services.map((service, index) => (
-            <motion.div key={index} variants={itemVariants} className="h-full">
-              <ServiceCard
-                icon={service.icon}
-                title={service.title}
-                description={service.description}
-                className="border-none bg-gradient-to-br from-white to-red-50 shadow-lg hover:shadow-xl hover:shadow-red-100/30 transition-all duration-300"
-              />
-            </motion.div>
-          ))}
+          <Carousel
+            ref={carouselRef}
+            className="w-full"
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+          >
+            <CarouselContent className="-ml-2 md:-ml-4">
+              {services.map((service, index) => (
+                <CarouselItem key={index} className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/3">
+                  <div className="h-full">
+                    <ServiceCard
+                      icon={service.icon}
+                      title={service.title}
+                      description={service.description}
+                      className="border-none h-full bg-gradient-to-br from-white to-red-50 shadow-lg hover:shadow-xl hover:shadow-red-100/30 transition-all duration-300"
+                    />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            
+            <div className="flex justify-center mt-8">
+              <CarouselPrevious className="static translate-y-0 mr-2 bg-red-100 border-red-200 text-red-600 hover:bg-red-600 hover:text-white" />
+              <CarouselNext className="static translate-y-0 ml-2 bg-red-100 border-red-200 text-red-600 hover:bg-red-600 hover:text-white" />
+            </div>
+          </Carousel>
         </motion.div>
 
         <motion.div 
