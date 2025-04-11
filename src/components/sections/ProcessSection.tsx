@@ -7,14 +7,16 @@ import {
   Search, 
   CalendarCheck, 
   CheckCircle, 
-  BarChart
+  BarChart,
+  CircleDot
 } from 'lucide-react';
+import { Card, CardContent } from "@/components/ui/card";
 import { 
-  Tabs, 
-  TabsContent, 
-  TabsList, 
-  TabsTrigger 
-} from "@/components/ui/tabs";
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const steps = [
   {
@@ -56,12 +58,12 @@ const steps = [
 ];
 
 const ProcessSection = () => {
-  const [activeTab, setActiveTab] = useState("1");
+  const [activeStep, setActiveStep] = useState("1");
 
   return (
-    <section id="process" className="py-16 bg-gradient-to-br from-red-50 to-white relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-b from-red-100 to-transparent rounded-full opacity-70 blur-3xl transform translate-x-1/4 -translate-y-1/4"></div>
-      <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-t from-red-100 to-transparent rounded-full opacity-70 blur-3xl transform -translate-x-1/4 translate-y-1/4"></div>
+    <section id="process" className="py-16 bg-gradient-to-r from-white via-red-50 to-white relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-1/4 h-1/4 bg-gradient-to-b from-red-100 to-transparent rounded-full opacity-60 blur-3xl transform translate-x-1/4 -translate-y-1/4"></div>
+      <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-t from-red-100 to-transparent rounded-full opacity-60 blur-3xl transform -translate-x-1/4 translate-y-1/4"></div>
       
       <div className="container relative z-10">
         <motion.div 
@@ -71,6 +73,11 @@ const ProcessSection = () => {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
+          <div className="flex justify-center items-center mb-4">
+            <div className="bg-red-600 rounded-full p-3 shadow-lg shadow-red-200">
+              <CircleDot className="text-white" size={28} />
+            </div>
+          </div>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-red-700 to-red-500">
             Our Process, Your Peace of Mind
           </h2>
@@ -80,94 +87,70 @@ const ProcessSection = () => {
           </p>
         </motion.div>
 
-        {/* Desktop view - Tabs layout */}
-        <div className="hidden md:block">
-          <Tabs 
-            defaultValue="1" 
-            className="w-full" 
-            value={activeTab} 
-            onValueChange={setActiveTab}
-          >
-            <TabsList className="grid grid-cols-6 bg-red-50/50 backdrop-blur-sm rounded-xl p-1 mb-8 w-full">
-              {steps.map((step) => (
-                <TabsTrigger 
-                  key={step.number} 
-                  value={step.number}
-                  className="data-[state=active]:bg-white data-[state=active]:text-red-600 data-[state=active]:shadow-md py-3"
-                >
-                  <span className="font-bold text-lg mr-2">{step.number}</span>
-                </TabsTrigger>
-              ))}
-            </TabsList>
-            
-            {steps.map((step) => (
-              <TabsContent key={step.number} value={step.number} className="mt-0">
-                <motion.div 
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.3 }}
-                  className="bg-white rounded-2xl shadow-xl overflow-hidden border border-red-100"
-                >
-                  <div className="grid grid-cols-5">
-                    <div className="col-span-1 bg-gradient-to-br from-red-500 to-red-700 p-8 flex items-center justify-center">
-                      <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center">
+        {/* Modern visual process flow - visible in one window */}
+        <div className="relative mt-12">
+          {/* Process Line */}
+          <div className="hidden md:block absolute top-16 left-0 w-full h-1 bg-gradient-to-r from-red-200 via-red-500 to-red-200 z-0"></div>
+          
+          {/* Process Steps */}
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
+            {steps.map((step, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="relative"
+              >
+                <div className="flex flex-col items-center">
+                  {/* Step Number Circle */}
+                  <div 
+                    className={`w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg z-10 shadow-lg mb-6
+                    ${index % 2 === 0 ? 'bg-gradient-to-br from-red-500 to-red-700' : 'bg-gradient-to-br from-red-600 to-red-800'}`}
+                  >
+                    {step.number}
+                  </div>
+
+                  {/* Step Card */}
+                  <Card className="w-full h-full bg-white hover:shadow-xl transition-all duration-300 border-red-100 overflow-hidden">
+                    <div className="bg-gradient-to-r from-red-500 to-red-600 p-3 flex items-center gap-3">
+                      <div className="bg-white/10 w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-sm">
                         {step.icon}
                       </div>
+                      <h3 className="font-bold text-white truncate">{step.title}</h3>
                     </div>
-                    <div className="col-span-4 p-8">
-                      <h3 className="text-2xl font-bold mb-4 text-red-600 flex items-center">
-                        <span className="inline-block w-8 h-8 rounded-full bg-red-600 text-white flex items-center justify-center mr-3">{step.number}</span>
-                        {step.title}
-                      </h3>
-                      <p className="text-gray-700 text-lg">{step.description}</p>
-                    </div>
-                  </div>
-                </motion.div>
-              </TabsContent>
-            ))}
-          </Tabs>
-          
-          {/* Process timeline indicators */}
-          <div className="flex justify-between items-center mt-8 px-8">
-            {steps.map((step, index) => (
-              <div key={index} className="flex flex-col items-center">
-                <button 
-                  className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${activeTab === step.number ? 'bg-red-600 text-white' : 'bg-red-100 text-red-600'}`}
-                  onClick={() => setActiveTab(step.number)}
-                >
-                  {step.number}
-                </button>
-                {index < steps.length - 1 && (
-                  <div className="h-1 w-24 bg-red-200 mt-6 absolute translate-x-16"></div>
-                )}
-              </div>
+                    <CardContent className="p-4 text-sm">
+                      <p className="text-gray-600">{step.description}</p>
+                    </CardContent>
+                  </Card>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
         
-        {/* Mobile view - Card layout */}
-        <div className="md:hidden grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {steps.map((step, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              viewport={{ once: true, margin: "-50px" }}
-              className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden border border-red-100/50"
-            >
-              <div className="bg-gradient-to-r from-red-500 to-red-600 p-4 flex items-center gap-3">
-                <div className="bg-white/10 w-10 h-10 rounded-full flex items-center justify-center">
-                  {step.icon}
-                </div>
-                <h3 className="font-bold text-white text-lg">{step.title}</h3>
-              </div>
-              <div className="p-4">
-                <p className="text-sm text-gray-600">{step.description}</p>
-              </div>
-            </motion.div>
-          ))}
+        {/* Mobile Accordion View */}
+        <div className="md:hidden mt-8">
+          <Accordion type="single" collapsible className="w-full bg-white rounded-lg shadow-md">
+            {steps.map((step, index) => (
+              <AccordionItem key={index} value={step.number} className="border-b border-red-100">
+                <AccordionTrigger className="px-4 py-3 hover:bg-red-50 hover:no-underline">
+                  <div className="flex items-center gap-3">
+                    <div className="bg-gradient-to-br from-red-500 to-red-700 w-8 h-8 rounded-full flex items-center justify-center text-white font-bold shadow-sm">
+                      {step.number}
+                    </div>
+                    <span className="font-medium text-gray-800">{step.title}</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="px-4 pb-3">
+                  <div className="flex items-start gap-3 pl-11">
+                    <p className="text-gray-600 text-sm">{step.description}</p>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
       </div>
     </section>

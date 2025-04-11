@@ -16,7 +16,8 @@ import {
   MessageSquare,
   BookOpen,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Briefcase
 } from 'lucide-react';
 import { useRef, useState, useEffect } from "react";
 import {
@@ -82,7 +83,11 @@ const ServicesSection = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <span className="inline-block px-6 py-2 bg-gradient-to-r from-red-50 to-red-100 text-red-600 font-medium rounded-full mb-4">Our Expertise</span>
+            <div className="flex justify-center items-center mb-4">
+              <div className="bg-red-600 rounded-full p-3 shadow-lg shadow-red-200">
+                <Briefcase className="text-white" size={28} />
+              </div>
+            </div>
             <h2 className="text-3xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-red-700 to-red-500">Services We Offer</h2>
             <p className="text-gray-600 max-w-3xl mx-auto">
               At Rareminds, we provide precision recruitment solutions tailored for fast-growing companies, enterprise teams, and industry leaders.

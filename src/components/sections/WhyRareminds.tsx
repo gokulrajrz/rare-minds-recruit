@@ -9,7 +9,8 @@ import {
   ArrowRight, 
   Shield, 
   Briefcase,
-  Target
+  Target,
+  Award
 } from 'lucide-react';
 import { useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
@@ -79,6 +80,11 @@ const WhyRareminds = () => {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.2 }}
           >
+            <div className="flex justify-center items-center mb-4">
+              <div className="bg-red-600 rounded-full p-3 shadow-lg shadow-red-200">
+                <Award className="text-white" size={28} />
+              </div>
+            </div>
             <h2 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-700 to-red-500 mb-6">
               Why Choose Rareminds?
             </h2>
