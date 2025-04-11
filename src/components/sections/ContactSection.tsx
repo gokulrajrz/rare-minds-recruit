@@ -1,10 +1,11 @@
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { Phone, Mail, MapPin } from 'lucide-react';
+import { Phone, Mail, MapPin, Send, Calendar, CheckCircle2, ArrowRight, ExternalLink } from 'lucide-react';
 
 const ContactSection = () => {
   const { toast } = useToast();
@@ -16,6 +17,8 @@ const ContactSection = () => {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -33,126 +36,210 @@ const ContactSection = () => {
         description: "Thank you for reaching out. Our team will contact you shortly.",
       });
       
-      setFormData({
-        name: '',
-        company: '',
-        email: '',
-        role: '',
-        message: ''
-      });
-      
+      setSubmitted(true);
       setIsSubmitting(false);
+      
+      setTimeout(() => {
+        setFormData({
+          name: '',
+          company: '',
+          email: '',
+          role: '',
+          message: ''
+        });
+        setSubmitted(false);
+        if (formRef.current) formRef.current.reset();
+      }, 3000);
     }, 1500);
   };
 
+  const services = [
+    "Executive Search",
+    "Bulk Hiring",
+    "Technical Talent",
+    "Leadership Roles",
+    "Remote Teams",
+    "Contract Staffing"
+  ];
+
   return (
-    <section id="contact" className="section gradient-bg text-white">
-      <div className="container">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Let's Build Your Success Team</h2>
-          <p className="text-xl opacity-90 max-w-2xl mx-auto">
+    <section id="contact" className="section py-24 relative overflow-hidden bg-gradient-to-br from-gray-900 to-red-900 text-white">
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzRjMC0yLjIgMS44LTQgNC00czQgMS44IDQgNC0xLjggNC00IDQtNC0xLjgtNC00TTE2IDI0YzAtMi4yIDEuOC00IDQtNHM0IDEuOCA0IDQtMS44IDQtNCA0LTQtMS44LTQtNCIvPjwvZz48L2c+PC9zdmc+')] opacity-20"></div>
+      
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+        className="container relative z-10"
+      >
+        <div className="text-center mb-16">
+          <div className="w-20 h-20 bg-red-600 rounded-2xl mx-auto mb-8 flex items-center justify-center rotate-12 shadow-lg shadow-red-900/50">
+            <Send size={36} className="text-white" />
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">Let's Build Your Success Team</h2>
+          <p className="text-xl opacity-90 max-w-2xl mx-auto text-gray-200">
             Whether you're hiring 5 or 500, we'll help you get it right.
           </p>
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">
-          <div className="lg:col-span-3 animate-on-scroll">
-            <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6 text-gray-800">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div>
-                  <label htmlFor="name" className="block mb-2 font-medium">Your Name</label>
-                  <Input 
-                    id="name" 
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Full Name" 
-                    className="w-full" 
-                    required 
-                  />
-                </div>
-                <div>
-                  <label htmlFor="company" className="block mb-2 font-medium">Company</label>
-                  <Input 
-                    id="company" 
-                    name="company"
-                    value={formData.company}
-                    onChange={handleChange}
-                    placeholder="Company Name" 
-                    className="w-full" 
-                    required 
-                  />
-                </div>
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="lg:col-span-3"
+          >
+            <div className="bg-white/10 backdrop-blur-sm border border-white/10 rounded-3xl overflow-hidden shadow-xl">
+              <div className="p-8">
+                <h3 className="text-2xl font-bold mb-6 flex items-center gap-3">
+                  <span className="bg-red-600 w-10 h-10 rounded-full flex items-center justify-center">
+                    <Mail size={20} />
+                  </span>
+                  Request Talent Now
+                </h3>
+                
+                <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label htmlFor="name" className="block mb-2 font-medium text-gray-200">Your Name</label>
+                      <Input 
+                        id="name" 
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        placeholder="Full Name" 
+                        className="w-full bg-white/5 border-white/10 text-white placeholder:text-gray-400" 
+                        required 
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="company" className="block mb-2 font-medium text-gray-200">Company</label>
+                      <Input 
+                        id="company" 
+                        name="company"
+                        value={formData.company}
+                        onChange={handleChange}
+                        placeholder="Company Name" 
+                        className="w-full bg-white/5 border-white/10 text-white placeholder:text-gray-400" 
+                        required 
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label htmlFor="email" className="block mb-2 font-medium text-gray-200">Email Address</label>
+                      <Input 
+                        id="email" 
+                        name="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={handleChange} 
+                        placeholder="name@company.com" 
+                        className="w-full bg-white/5 border-white/10 text-white placeholder:text-gray-400" 
+                        required 
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="role" className="block mb-2 font-medium text-gray-200">Role to Hire</label>
+                      <Input 
+                        id="role" 
+                        name="role"
+                        value={formData.role}
+                        onChange={handleChange}
+                        placeholder="Job Title/Position" 
+                        className="w-full bg-white/5 border-white/10 text-white placeholder:text-gray-400" 
+                        required 
+                      />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="message" className="block mb-2 font-medium text-gray-200">Message</label>
+                    <Textarea 
+                      id="message" 
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      placeholder="Tell us about your hiring needs or challenges" 
+                      className="w-full min-h-[120px] bg-white/5 border-white/10 text-white placeholder:text-gray-400" 
+                      required 
+                    />
+                  </div>
+                  
+                  <div className="pt-4">
+                    <AnimatePresence mode="wait">
+                      {!submitted ? (
+                        <motion.div
+                          key="button"
+                          initial={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          className="flex flex-col sm:flex-row gap-4"
+                        >
+                          <Button 
+                            type="submit" 
+                            className="bg-red-600 hover:bg-red-700 text-white font-medium px-8 py-6 text-lg rounded-xl"
+                            disabled={isSubmitting}
+                          >
+                            {isSubmitting ? (
+                              <span className="flex items-center">
+                                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                Sending...
+                              </span>
+                            ) : (
+                              <span className="flex items-center">
+                                Request Talent <ArrowRight size={18} className="ml-2"/>
+                              </span>
+                            )}
+                          </Button>
+                          <Button 
+                            type="button" 
+                            variant="outline"
+                            className="border-white/30 text-white hover:bg-white/10 rounded-xl"
+                            onClick={() => window.open('https://calendly.com')}
+                          >
+                            <Calendar size={18} className="mr-2" /> Schedule a Consultation
+                          </Button>
+                        </motion.div>
+                      ) : (
+                        <motion.div
+                          key="success"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="bg-green-600/20 border border-green-600/30 rounded-xl p-4 text-center"
+                        >
+                          <CheckCircle2 size={32} className="mx-auto mb-2 text-green-400" />
+                          <p className="font-medium">Message sent successfully!</p>
+                          <p className="text-sm text-gray-300 mt-1">Our team will contact you shortly.</p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </form>
               </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div>
-                  <label htmlFor="email" className="block mb-2 font-medium">Email Address</label>
-                  <Input 
-                    id="email" 
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange} 
-                    placeholder="name@company.com" 
-                    className="w-full" 
-                    required 
-                  />
-                </div>
-                <div>
-                  <label htmlFor="role" className="block mb-2 font-medium">Role to Hire</label>
-                  <Input 
-                    id="role" 
-                    name="role"
-                    value={formData.role}
-                    onChange={handleChange}
-                    placeholder="Job Title/Position" 
-                    className="w-full" 
-                    required 
-                  />
-                </div>
-              </div>
-              
-              <div className="mb-6">
-                <label htmlFor="message" className="block mb-2 font-medium">Message</label>
-                <Textarea 
-                  id="message" 
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder="Tell us about your hiring needs or challenges" 
-                  className="w-full min-h-[120px]" 
-                  required 
-                />
-              </div>
-              
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  type="submit" 
-                  className="bg-rareminds-purple hover:bg-rareminds-accent text-white"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? 'Sending...' : 'Request Talent'}
-                </Button>
-                <Button 
-                  type="button" 
-                  variant="outline"
-                  className="border-rareminds-purple text-rareminds-purple hover:bg-rareminds-light"
-                  onClick={() => window.open('https://calendly.com')}
-                >
-                  Schedule a Free Consultation
-                </Button>
-              </div>
-            </form>
-          </div>
+            </div>
+          </motion.div>
           
-          <div className="lg:col-span-2 animate-on-scroll">
-            <div className="h-full flex flex-col justify-between">
-              <div>
+          <motion.div 
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="lg:col-span-2"
+          >
+            <div className="h-full flex flex-col justify-between gap-6">
+              <div className="bg-white/10 backdrop-blur-sm border border-white/10 rounded-3xl p-8 shadow-xl">
                 <h3 className="text-2xl font-bold mb-6">Get in Touch</h3>
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
-                    <Phone size={24} className="mt-1" />
+                    <div className="bg-red-600/30 p-3 rounded-xl">
+                      <Phone size={24} />
+                    </div>
                     <div>
                       <h4 className="font-semibold mb-1">Phone</h4>
                       <p>+91 98765 43210</p>
@@ -160,7 +247,9 @@ const ContactSection = () => {
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <Mail size={24} className="mt-1" />
+                    <div className="bg-red-600/30 p-3 rounded-xl">
+                      <Mail size={24} />
+                    </div>
                     <div>
                       <h4 className="font-semibold mb-1">Email</h4>
                       <p>info@rareminds.com</p>
@@ -168,7 +257,9 @@ const ContactSection = () => {
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <MapPin size={24} className="mt-1" />
+                    <div className="bg-red-600/30 p-3 rounded-xl">
+                      <MapPin size={24} />
+                    </div>
                     <div>
                       <h4 className="font-semibold mb-1">Address</h4>
                       <p>123 Corporate Avenue, Tech Park</p>
@@ -178,30 +269,30 @@ const ContactSection = () => {
                 </div>
               </div>
               
-              <div className="mt-8 p-6 bg-white bg-opacity-10 backdrop-blur-sm rounded-lg">
-                <h4 className="font-semibold text-lg mb-3">Connect with Us</h4>
-                <div className="flex gap-4">
-                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center bg-white text-rareminds-purple hover:bg-opacity-90 transition-opacity">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                      <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
-                    </svg>
-                  </a>
-                  <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center bg-white text-rareminds-purple hover:bg-opacity-90 transition-opacity">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                      <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
-                    </svg>
-                  </a>
-                  <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center bg-white text-rareminds-purple hover:bg-opacity-90 transition-opacity">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                      <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
-                    </svg>
-                  </a>
+              <div className="bg-white/10 backdrop-blur-sm border border-white/10 rounded-3xl p-8 shadow-xl">
+                <h3 className="text-xl font-bold mb-4">Our Services</h3>
+                <div className="grid grid-cols-2 gap-3 mb-4">
+                  {services.map((service, index) => (
+                    <div 
+                      key={index}
+                      className="bg-white/5 hover:bg-white/10 transition-colors rounded-lg p-3 flex items-center gap-2"
+                    >
+                      <div className="w-2 h-2 rounded-full bg-red-500"></div>
+                      <span className="text-sm">{service}</span>
+                    </div>
+                  ))}
                 </div>
+                <a 
+                  href="#services" 
+                  className="flex items-center text-red-300 hover:text-red-200 transition-colors text-sm mt-2"
+                >
+                  View all services <ExternalLink size={14} className="ml-1" />
+                </a>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

@@ -1,6 +1,5 @@
 
-import { useEffect } from "react";
-import Navbar from "@/components/layout/Navbar";
+import { useEffect, useState } from "react";
 import HeroSection from "@/components/sections/HeroSection";
 import WhyRareminds from "@/components/sections/WhyRareminds";
 import ServicesSection from "@/components/sections/ServicesSection";
@@ -9,8 +8,12 @@ import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import CaseStudiesSection from "@/components/sections/CaseStudiesSection";
 import ProcessSection from "@/components/sections/ProcessSection";
 import ContactSection from "@/components/sections/ContactSection";
+import Header from "@/components/layout/Header";
+import FooterBar from "@/components/layout/FooterBar";
 
 const Index = () => {
+  const [navbarOpen, setNavbarOpen] = useState(false);
+  
   // Animation on scroll effect
   useEffect(() => {
     const handleScroll = () => {
@@ -37,7 +40,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
-      <Navbar />
+      <Header navbarOpen={navbarOpen} setNavbarOpen={setNavbarOpen} />
       <HeroSection />
       <div id="why-rareminds">
         <WhyRareminds />
@@ -45,21 +48,21 @@ const Index = () => {
       <div id="services">
         <ServicesSection />
       </div>
-      <IndustriesSection />
-      <TestimonialsSection />
-      <CaseStudiesSection />
+      <div id="industries">
+        <IndustriesSection />
+      </div>
+      <div id="testimonials">
+        <TestimonialsSection />
+      </div>
+      <div id="case-studies">
+        <CaseStudiesSection />
+      </div>
       <ProcessSection />
       <div id="contact">
         <ContactSection />
       </div>
       
-      <footer className="bg-rareminds-dark text-white py-6">
-        <div className="container text-center">
-          <p className="text-sm">
-            © {new Date().getFullYear()} Rareminds. All rights reserved.
-          </p>
-        </div>
-      </footer>
+      <FooterBar />
     </div>
   );
 };
