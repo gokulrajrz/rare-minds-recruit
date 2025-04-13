@@ -15,8 +15,6 @@ import {
   Map,
   MessageSquare,
   BookOpen,
-  ChevronLeft,
-  ChevronRight,
   Briefcase
 } from 'lucide-react';
 import { useRef, useState, useEffect } from "react";

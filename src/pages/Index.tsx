@@ -41,27 +41,30 @@ const Index = () => {
   return (
     <div className="min-h-screen overflow-x-hidden">
       <Header navbarOpen={navbarOpen} setNavbarOpen={setNavbarOpen} />
-      <HeroSection />
-      <div id="why-rareminds">
-        <WhyRareminds />
-      </div>
-      <div id="services">
-        <ServicesSection />
-      </div>
-      <div id="industries">
-        <IndustriesSection />
-      </div>
-      <div id="testimonials">
-        <TestimonialsSection />
-      </div>
-      <div id="case-studies">
-        <CaseStudiesSection />
-      </div>
-      <ProcessSection />
-      <div id="contact">
-        <ContactSection />
-      </div>
-      
+      <main>
+        <HeroSection />
+        <div id="why-rareminds">
+          <WhyRareminds />
+        </div>
+        <div id="services">
+          <ServicesSection />
+        </div>
+        <div id="industries">
+          <IndustriesSection />
+        </div>
+        <div id="testimonials">
+          <TestimonialsSection />
+        </div>
+        <div id="case-studies">
+          <CaseStudiesSection />
+        </div>
+        <div id="process">
+          <ProcessSection />
+        </div>
+        <div id="contact">
+          <ContactSection />
+        </div>
+      </main>
       <FooterBar />
     </div>
   );
