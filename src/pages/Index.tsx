@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import HeroSection from "@/components/sections/HeroSection";
 import WhyRareminds from "@/components/sections/WhyRareminds";
@@ -10,11 +9,11 @@ import ProcessSection from "@/components/sections/ProcessSection";
 import ContactSection from "@/components/sections/ContactSection";
 import Header from "@/components/layout/Header";
 import FooterBar from "@/components/layout/FooterBar";
+import TeamSection from "@/components/sections/TeamSection";
 
 const Index = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
   
-  // Animation on scroll effect
   useEffect(() => {
     const handleScroll = () => {
       const elements = document.querySelectorAll('.animate-on-scroll');
@@ -30,7 +29,6 @@ const Index = () => {
     };
 
     window.addEventListener('scroll', handleScroll);
-    // Trigger once on load
     setTimeout(handleScroll, 300);
     
     return () => {
@@ -60,6 +58,9 @@ const Index = () => {
         </div>
         <div id="process">
           <ProcessSection />
+        </div>
+        <div id="team">
+          <TeamSection />
         </div>
         <div id="contact">
           <ContactSection />
