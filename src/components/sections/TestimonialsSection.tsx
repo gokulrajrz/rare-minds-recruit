@@ -1,3 +1,4 @@
+
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import TestimonialCard from "../testimonials/TestimonialCard";
 import TestimonialsHeader from "../testimonials/TestimonialsHeader";
@@ -44,18 +45,18 @@ const TestimonialsSection = () => {
               align: "start",
               loop: true
             }}
-            className="relative"
+            className="w-full relative"
           >
             <CarouselContent>
               {testimonials.map((testimonial, index) => (
-                <CarouselItem key={index}>
+                <CarouselItem key={index} className="w-full">
                   <TestimonialCard {...testimonial} />
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <div className="absolute -left-4 right-4 top-1/2 flex -translate-y-1/2 justify-between">
-              <CarouselPrevious className="h-12 w-12 rounded-full border-2 border-red-100" />
-              <CarouselNext className="h-12 w-12 rounded-full border-2 border-red-100" />
+            <div className="flex justify-center gap-2 mt-8">
+              <CarouselPrevious className="relative static transform-none mx-2 bg-white shadow-md hover:bg-red-50 border-none" />
+              <CarouselNext className="relative static transform-none mx-2 bg-white shadow-md hover:bg-red-50 border-none" />
             </div>
           </Carousel>
         </div>

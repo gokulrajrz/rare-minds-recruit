@@ -10,7 +10,10 @@ import {
   MapPin,
   Briefcase,
   Globe,
-  CheckSquare
+  CheckSquare,
+  BadgeCheck,
+  TrendingUp,
+  CircleDollarSign
 } from 'lucide-react';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
@@ -102,28 +105,60 @@ const WhyRareminds = () => {
           ))}
         </div>
 
-        {/* Metrics Grid with Modern Design */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {metrics.map((metric, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-              className="group p-4 rounded-xl hover:bg-white/50 transition-all duration-300"
-            >
-              <div className="flex items-start gap-4">
-                <div className="inline-flex items-center justify-center p-2 bg-red-600/10 rounded-lg group-hover:bg-red-600/20 transition-colors">
-                  <div className="text-red-600">{metric.icon}</div>
+        {/* Fancy Metrics Grid with Modern Design */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {metrics.map((metric, index) => {
+            // Select different icon styles for variety
+            let IconComponent;
+            let gradientClass;
+            
+            switch (index % 4) {
+              case 0:
+                IconComponent = <BadgeCheck size={28} className="text-rareminds-purple" />;
+                gradientClass = "from-purple-500/10 to-purple-600/5";
+                break;
+              case 1:
+                IconComponent = <TrendingUp size={28} className="text-rareminds-accent" />;
+                gradientClass = "from-blue-500/10 to-indigo-600/5";
+                break;
+              case 2:
+                IconComponent = <CircleDollarSign size={28} className="text-green-600" />;
+                gradientClass = "from-green-500/10 to-emerald-600/5";
+                break;
+              case 3:
+                IconComponent = <div className="text-red-600">{metric.icon}</div>;
+                gradientClass = "from-red-500/10 to-orange-600/5";
+                break;
+              default:
+                IconComponent = <div className="text-red-600">{metric.icon}</div>;
+                gradientClass = "from-red-500/10 to-orange-600/5";
+            }
+            
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+                className="group relative"
+              >
+                <div className={`p-6 rounded-xl bg-gradient-to-br ${gradientClass} backdrop-blur-sm border border-gray-100 hover:border-rareminds-purple/30 transition-all duration-300 hover:shadow-lg hover:shadow-rareminds-purple/10 h-full flex flex-col`}>
+                  <div className="absolute top-0 right-0 h-24 w-24 bg-gradient-to-br from-white/20 to-transparent rounded-full -mr-12 -mt-12 opacity-70"></div>
+                  
+                  <div className="flex items-start gap-4 z-10 relative">
+                    <div className="inline-flex items-center justify-center p-3 bg-white rounded-lg shadow-sm group-hover:shadow-md transition-all">
+                      {IconComponent}
+                    </div>
+                    <div>
+                      <div className="text-sm font-medium text-gray-600 mb-1">{metric.label}</div>
+                      <div className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-rareminds-purple to-rareminds-accent mb-1">{metric.value}</div>
+                      <div className="text-sm text-gray-600">{metric.description}</div>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <div className="text-sm font-medium text-gray-600 mb-1">{metric.label}</div>
-                  <div className="text-2xl font-bold text-gray-900 mb-1">{metric.value}</div>
-                  <div className="text-sm text-gray-600">{metric.description}</div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
