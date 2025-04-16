@@ -1,14 +1,6 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { MessageSquareQuote, ChevronLeft, ChevronRight, Star } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import TestimonialCard from "../testimonials/TestimonialCard";
+import TestimonialsHeader from "../testimonials/TestimonialsHeader";
 
 const testimonials = [
   {
@@ -44,21 +36,7 @@ const TestimonialsSection = () => {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-blue-100/20 via-transparent to-transparent"></div>
       
       <div className="container relative z-10">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-red-600 mx-auto mb-6 rounded-full flex items-center justify-center rotate-12 shadow-lg">
-            <MessageSquareQuote size={32} className="text-white" />
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">What Our Clients Say</h2>
-          <p className="text-gray-600 max-w-3xl mx-auto text-lg">
-            Don't just take our word for it. Hear from the companies that trust Rareminds with their most important asset—their people.
-          </p>
-        </motion.div>
+        <TestimonialsHeader />
 
         <div className="max-w-4xl mx-auto px-4">
           <Carousel
@@ -71,33 +49,7 @@ const TestimonialsSection = () => {
             <CarouselContent>
               {testimonials.map((testimonial, index) => (
                 <CarouselItem key={index}>
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.1 }}
-                    viewport={{ once: true }}
-                    className="bg-white rounded-2xl shadow-xl p-8 md:p-10"
-                  >
-                    <div className="flex space-x-1 mb-6">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className={cn(
-                            "w-5 h-5",
-                            i < testimonial.rating
-                              ? "text-yellow-500 fill-yellow-500"
-                              : "text-gray-300"
-                          )}
-                        />
-                      ))}
-                    </div>
-                    <p className="text-gray-700 text-lg mb-8">"{testimonial.content}"</p>
-                    <div className="border-t border-gray-100 pt-6">
-                      <h4 className="font-bold text-xl text-gray-900">{testimonial.author}</h4>
-                      <p className="text-gray-600 font-medium">{testimonial.position}</p>
-                      <p className="text-gray-500">{testimonial.company}</p>
-                    </div>
-                  </motion.div>
+                  <TestimonialCard {...testimonial} />
                 </CarouselItem>
               ))}
             </CarouselContent>
